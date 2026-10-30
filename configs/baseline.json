@@ -1,0 +1,59 @@
+{
+ "detect": {
+  "yellow_h": [
+   10,
+   100
+  ],
+  "yellow_s_min": 0,
+  "yellow_v_min": 143,
+  "white_s_max": 65,
+  "white_v_min": 138,
+  "tophat_kernel": 31,
+  "tophat_min": 25,
+  "blur_ksize": 5,
+  "canny": [
+   33,
+   107
+  ],
+  "mask_dilate": 5,
+  "hough_rho": 2.0,
+  "hough_threshold": 48,
+  "hough_min_len": 29,
+  "hough_max_gap": 42,
+  "min_abs_slope": 0.4
+ },
+ "roi": {
+  "top_y": 0.5,
+  "top_half_w": 0.0,
+  "bottom_half_w": 0.5,
+  "guided_margin_px": 45,
+  "horizon_margin": 0.03
+ },
+ "track": {
+  "alpha": 0.35,
+  "gate_px": 70.0,
+  "max_hold": 15,
+  "width_tol": [
+   0.6,
+   1.5
+  ],
+  "width_alpha": 0.05
+ },
+ "geometry": {
+  "lane_width_m": 3.7,
+  "camera_offset_m": 0.0,
+  "eval_row": 0.95
+ },
+ "events": {
+  "enter_m": 0.95,
+  "exit_m": 0.75,
+  "min_duration_s": 0.4,
+  "merge_gap_s": 1.0,
+  "min_confidence": 0.3
+ },
+ "fps": 30.0,
+ "robust_fit": false,
+ "tracking": false,
+ "guided_roi": false,
+ "adaptive_mask": false
+}
