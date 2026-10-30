@@ -4,7 +4,7 @@ from dataclasses import asdict, dataclass, field, replace
 
 @dataclass
 class DetectParams:
-    # colour mask (OpenCV HSV: H 0-179, S/V 0-255). Yellow and white as in the course brief.
+    # colour mask (OpenCV HSV: H 0-179, S/V 0-255). Yellow and white paint.
     yellow_h: tuple = (12, 40)
     yellow_s_min: int = 80
     yellow_v_min: int = 120
@@ -97,9 +97,9 @@ class Config:
 
 
 def baseline_config() -> Config:
-    """The course-assignment pipeline, completed: HSV mask + Canny + triangle ROI + Hough + regression, per frame."""
+    """Plain per-frame pipeline: HSV mask + Canny + triangle ROI + Hough + regression, per frame."""
     c = Config(robust_fit=False, tracking=False, guided_roi=False, adaptive_mask=False)
-    c.detect.yellow_h, c.detect.yellow_s_min, c.detect.yellow_v_min = (10, 100), 0, 190   # brief: H in (10,100), V>=190
+    c.detect.yellow_h, c.detect.yellow_s_min, c.detect.yellow_v_min = (10, 100), 0, 190   # H in (10,100), V>=190
     c.detect.white_s_max, c.detect.white_v_min = 65, 140
     c.detect.canny, c.detect.hough_threshold = (100, 300), 100
     c.detect.hough_min_len, c.detect.hough_max_gap, c.detect.blur_ksize = 40, 40, 5

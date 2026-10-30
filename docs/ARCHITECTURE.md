@@ -17,7 +17,7 @@ flowchart LR
 
 | Module | Responsibility |
 |---|---|
-| `config.py` | all parameters (dataclasses), `baseline_config()` = the course pipeline, JSON load/save |
+| `config.py` | all parameters (dataclasses), `baseline_config()` = the plain per-frame pipeline, JSON load/save |
 | `detect.py` | colour mask, ROI builders, Hough, slope filter, line fit |
 | `track.py` | two-line tracker |
 | `geometry.py` | pixels to metres |

@@ -1,7 +1,7 @@
 """Test-set evaluation: ablation variants x difficulty on held-out simulated clips (seeds 0..N-1).
 
 Variants (all share the tuned detector parameters of the full pipeline except `baseline`):
-  baseline   course pipeline, own tuned parameters, per frame
+  baseline   plain per-frame pipeline, own tuned parameters, per frame
   +robust    length-weighted fit with outlier rejection + adaptive (top-hat) colour mask
   +tracking  + temporal tracker (gating, EMA, coasting, single-line inference)
   full       + lane-guided ROI

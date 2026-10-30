@@ -1,6 +1,6 @@
 # Lane-drift monitor
 
-Turns a dashcam video into **lateral position, lane-departure events and an annotated clip**, for driver-safety review (fleet telematics, drowsy-drift detection, post-trip coaching). It grew out of a university computer-vision assignment (lane detection on single images) and was rebuilt for a real use case: continuous video, temporal consistency, metres instead of pixels, and a measured alert policy.
+Turns a dashcam video into **lateral position, lane-departure events and an annotated clip**, for driver-safety review (fleet telematics, drowsy-drift detection, post-trip coaching). Built for continuous video rather than single images: temporal consistency, lateral position in metres instead of pixels, and a measured alert policy.
 
 ![ablation](outputs/figures/ablation_bars.png)
 
@@ -18,11 +18,11 @@ About 9.5 ms per 960x540 frame on one CPU core (about 100 FPS, detector only), n
 
 | difficulty | variant | frame coverage | offset MAE (m) | departure recall | precision |
 | - | - | - | - | - | - |
-| easy | course baseline | 0.25 | 0.081 | 0.00 | n/a |
+| easy | per-frame baseline | 0.25 | 0.081 | 0.00 | n/a |
 | easy | **full** | **0.99** | **0.051** | **0.94** | 1.00 |
-| medium | course baseline | 0.22 | 0.083 | 0.00 | n/a |
+| medium | per-frame baseline | 0.22 | 0.083 | 0.00 | n/a |
 | medium | **full** | **1.00** | **0.053** | **1.00** | 0.96 |
-| hard | course baseline | 0.09 | 0.104 | 0.00 | n/a |
+| hard | per-frame baseline | 0.09 | 0.104 | 0.00 | n/a |
 | hard | **full** | 0.55 | 0.065 | 0.55 | 1.00 |
 
 
@@ -50,7 +50,6 @@ scripts/     tune.py (validation seeds) run_eval.py (test seeds) make_report.py 
 configs/     baseline.json final.json (tuned on validation clips only)
 tests/       geometry, fitting, tracker, event logic, simulator, end-to-end
 docs/        ARCHITECTURE.md METHOD.md DATASET.md
-legacy/      the original assignment code and brief, with notes on what was wrong
 outputs/     results/ (CSV, summary.md), figures/, demo/demo_medium.mp4
 ```
 

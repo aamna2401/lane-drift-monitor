@@ -1,4 +1,4 @@
-"""Sanity check on real photos (the 25 course test images): does the detector find both lane lines?
+"""Sanity check on real photos (25 real road photos): does the detector find both lane lines?
 
 No ground truth, so this is a qualitative check, not a metric of accuracy. Images are not redistributed
 (see docs/DATASET.md); put them in data/real_stills/. Writes outputs/results/real_stills.csv and

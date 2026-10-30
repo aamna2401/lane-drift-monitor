@@ -17,7 +17,7 @@ A true departure is defined by the same rule the detector uses (|offset| >= 0.95
 Not simulated: rain or dirt on the lens, camera roll, hood reflections, cones, lane changes, other markings (arrows, crosswalks).
 
 ## Real photos (qualitative check only)
-The 25 test images from the course brief (`data/real_stills/test1.jpg` ... `test25.jpg`) come from the Udacity
+25 real road photos (`data/real_stills/test1.jpg` ... `test25.jpg`) come from the Udacity
 self-driving-car lane-finding project. They carry no labels and their licence is not stated here, so they are not
 redistributed: place them in `data/real_stills/` yourself to run `scripts/eval_real_stills.py`.
 

@@ -1,7 +1,6 @@
 """Per-frame lane line detection: colour mask + Canny + ROI + Hough + slope filter + line fit.
 
-Steps 1-8 of the course brief, vectorised (the original used per-pixel Python loops) and with the
-parts the assignment left open (line fitting, automatic ROI) completed.
+Colour mask, Canny, ROI, Hough, slope filter and robust line fit, vectorised, with an automatic ROI.
 """
 from dataclasses import dataclass
 
@@ -115,6 +114,6 @@ def detect_lines(bgr: np.ndarray, cfg: Config, roi: np.ndarray | None = None) ->
         slope = slope[np.abs(slope) >= p.min_abs_slope]
     else:
         slope = np.zeros(0)
-    # image y grows downwards: left lane has negative slope, right lane positive (brief, step 7)
+    # image y grows downwards: left lane has negative slope, right lane positive
     left, right = _fit(segs[slope < 0], cfg.robust_fit), _fit(segs[slope > 0], cfg.robust_fit)
     return FrameDetection(left, right, mask, edges, roi, segs)

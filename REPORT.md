@@ -4,28 +4,28 @@ Aamna Khan · 2026-10-29 · code, configs and raw per-clip scores in this reposi
 
 ## 1. Problem and use case
 A fleet-safety or driver-coaching product needs to know *when and how far a vehicle drifted out of its lane*, from an ordinary
-forward dashcam, cheaply enough to run on every trip. The course assignment (Assignment 4, Computer Vision) solved the first
-half of that on single photos: colour mask, Canny, ROI, Hough. A real system also needs continuity over video, a lateral
-distance in metres, and an alert rule whose error rate is known. This project adds those, and measures them.
+forward dashcam, cheaply enough to run on every trip. A classical single-image detector (colour mask, Canny, ROI, Hough) solves the first
+half of that. A real system also needs continuity over video, a lateral distance in metres, and an alert rule whose error
+rate is known. This project adds those, and measures them.
 
 Success criteria set before evaluation: (1) a lateral-offset estimate on nearly every frame, (2) offset error well under 0.2 m,
 (3) departure events found with high recall and few false alarms, (4) real-time on a CPU.
 
-## 2. What changed relative to the assignment
-| Assignment | This project |
+## 2. Design relative to a plain per-frame detector
+| Per-frame baseline | This project |
 |---|---|
-| single images, notebook-style globals, per-pixel loops | vectorised package, tested functions, ~10 ms/frame |
-| Hough, grouping, regression left unfinished | finished, with outlier-robust fit |
-| fixed triangular ROI | ROI follows the tracked lanes and the estimated horizon (the brief's "automatic ROI" question) |
-| two lines required in every image | tracker infers a missing line from the lane width, coasts through gaps |
+| single images, per-pixel loops | vectorised package, tested functions, ~10 ms/frame |
+| least-squares line fit | outlier-robust fit |
+| fixed triangular ROI | ROI follows the tracked lanes and the estimated horizon |
+| two lines required in every frame | tracker infers a missing line from the lane width, coasts through gaps |
 | pixels | metres, via an assumed lane width |
-| none | departure events with hysteresis, duration and merging rules |
+| no alert logic | departure events with hysteresis, duration and merging rules |
 | visual checks | simulator with exact ground truth, held-out test seeds, bootstrap intervals |
 
 ## 3. Evaluation design
 - **Data.** Simulated dashcam clips (`docs/DATASET.md`): exact lateral offset for every frame; three difficulty levels.
   Validation seeds (8 clips) were used for tuning; 36 test clips (12 per level, 20 s, 30 fps) were used once for the tables below.
-- **Variants (ablation).** `baseline` = the assignment pipeline completed (own tuned parameters, per frame); `+robust` = robust fit +
+- **Variants (ablation).** `baseline` = a standard per-frame pipeline (HSV mask, Canny, triangular ROI, Hough, regression; own tuned parameters); `+robust` = robust fit +
   adaptive mask; `+tracking` = + temporal tracker; `full` = + lane-guided ROI.
 - **Metrics.** Frame coverage; offset MAE/P95/bias; event precision/recall/F1 and false alarms per hour. Intervals resample clips.
 - **Ground truth for events** applies the detector's own rule to the true offsets, so the metric measures perception only.
@@ -77,14 +77,14 @@ Figures: `outputs/figures/ablation_bars.png`, `trace_{easy,medium,hard}.png` (tr
 2. **The robust fit and adaptive mask alone do little** (coverage 0.25 → 0.28, MAE 0.081 → 0.077, within the intervals). They
    matter only once the tracker is on, where bad measurements would otherwise be blended into the track.
 3. **The baseline's zero event recall is partly an artefact of its design** (no continuity), not proof that Hough-based detection is
-   poor. A fairer "per-frame with single-line fallback" baseline is not included. Read the baseline column as "the assignment as written".
+   poor. A fairer "per-frame with single-line fallback" baseline is not included. Read the baseline column as "a plain per-frame pipeline".
 4. **Guided ROI helps modestly but consistently** (event F1 0.84 → 0.98 on medium, 0.53 → 0.71 on hard; MAE 0.061 → 0.053 on medium).
    The hard-clip intervals overlap, so that gain is suggestive, not established.
 
 ## 6. Limitations (read these)
 1. **No real labelled video.** All metrics are on simulated clips drawn by a renderer I wrote. Results show the method works when
    the world looks like the simulator; they do not estimate real-world accuracy.
-2. **The tuned detector did not transfer to real photos.** On the 25 course photos (no labels, so this only counts "both lines found",
+2. **The tuned detector did not transfer to real photos.** On 25 real road photos (no labels, so this only counts "both lines found",
    not correctness) the baseline found both lines in 76% and the sim-tuned robust detector in 60% (`outputs/results/real_stills.csv`).
    The tuned thresholds (for example V >= 165 for white, top-hat >= level) are partly specific to simulator brightness. Visual inspection
    of the contact sheet also shows some baseline detections on the wrong line, so 76% is not 76% correct.

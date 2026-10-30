@@ -1,11 +1,11 @@
 # Method
 
 ## Detection (per frame)
-1. **Colour mask.** HSV: yellow (H 12-40, S>=80, V>=120) or white (S<=65, V>=150) as in the course brief, ANDed with a
+1. **Colour mask.** HSV: yellow (H 12-40, S>=80, V>=120) or white (S<=65, V>=150) ANDed with a
    top-hat of V (kernel 31 px): paint must also be brighter than its surroundings, which suppresses bright asphalt and glare.
-2. **Canny** on the blurred grey image, kept only near the colour mask and inside the ROI (brief step 4).
+2. **Canny** on the blurred grey image, kept only near the colour mask and inside the ROI.
 3. **ROI.** Static trapezoid when nothing is tracked; otherwise a band around the *predicted* lane lines, from just above
-   the estimated horizon (intersection of the two tracked lines). This answers the brief's "choose the ROI automatically".
+   the estimated horizon (intersection of the two tracked lines).
 4. **Probabilistic Hough**, then drop segments with |dy/dx| < 0.4. Negative slope = left lane, positive = right (image y points down).
 5. **Fit** x = a*y + b per side (stable for near-vertical lines), length-weighted, with three rounds of MAD-based outlier removal.
 
