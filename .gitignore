@@ -1,0 +1,9 @@
+__pycache__/
+.pytest_cache/
+.venv/
+data/
+outputs/figures/real_stills_sheet.jpg
+outputs/results/real_stills.csv
+outputs/run*/
+*.mp4
+!outputs/demo/*.mp4
