@@ -30,7 +30,7 @@ About 9.5 ms per 960x540 frame on one CPU core (about 100 FPS, detector only), n
 
 Full tables with 95% bootstrap intervals: [`outputs/results/summary.md`](outputs/results/summary.md). Analysis, ablations and limitations: [`REPORT.md`](REPORT.md).
 
-**Read this before trusting the numbers.** The evaluation video is *simulated* (exact ground truth, but not real footage). On 25 real photos the simulator-tuned detector found both lines less often than the baseline (60% vs 76%), and 3 of 12 hard (dim) clips fail completely. See [REPORT.md](REPORT.md), "Limitations".
+**Read this before trusting the numbers.** The evaluation video is *simulated* (exact ground truth, but not real footage). On 25 real photos the simulator-tuned detector found both lines less often than the baseline (60% vs 76%), and 3 of 12 hard (dim) clips produced almost no output. See [REPORT.md](REPORT.md), "Limitations".
 
 ## Quick start
 
