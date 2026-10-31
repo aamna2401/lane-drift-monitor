@@ -2,6 +2,8 @@
 
 Turns a dashcam video into **lateral position, lane-departure events and an annotated clip**, for driver-safety review (fleet telematics, drowsy-drift detection, post-trip coaching). Built for continuous video rather than single images: temporal consistency, lateral position in metres instead of pixels, and a measured alert policy.
 
+<video src="outputs/demo/demo_medium.mp4" controls muted playsinline width="100%"></video>
+
 ![ablation](outputs/figures/ablation_bars.png)
 
 ## What it does
@@ -26,9 +28,9 @@ About 9.5 ms per 960x540 frame on one CPU core (about 100 FPS, detector only), n
 | hard | **full** | 0.55 | 0.065 | 0.55 | 1.00 |
 
 
-Full tables with 95% bootstrap intervals: [`outputs/results/summary.md`](file:///run/media/danish/404/AK/projects/lane-drift-monitor/outputs/results/summary.md). Analysis, ablations and limitations: [`REPORT.md`](file:///run/media/danish/404/AK/projects/lane-drift-monitor/REPORT.md).
+Full tables with 95% bootstrap intervals: [`outputs/results/summary.md`](outputs/results/summary.md). Analysis, ablations and limitations: [`REPORT.md`](REPORT.md).
 
-**Read this before trusting the numbers.** The evaluation video is *simulated* (exact ground truth, but not real footage). On 25 real photos the simulator-tuned detector found both lines less often than the baseline (60% vs 76%), and 3 of 12 hard (dim) clips fail completely. See REPORT.md, "Limitations".
+**Read this before trusting the numbers.** The evaluation video is *simulated* (exact ground truth, but not real footage). On 25 real photos the simulator-tuned detector found both lines less often than the baseline (60% vs 76%), and 3 of 12 hard (dim) clips fail completely. See [REPORT.md](REPORT.md), "Limitations".
 
 ## Quick start
 
@@ -40,7 +42,7 @@ python -m lanedrift analyse my_drive.mp4 --out outputs/run1 --config configs/fin
 uvicorn lanedrift.api:app            # POST /frame (image) -> lines + offset_m
 ```
 
-Reproduce everything: `make all` (about 10 min tuning + 15 min evaluation on 8 cores), or run [`notebooks/run_on_colab.ipynb`](file:///run/media/danish/404/AK/projects/lane-drift-monitor/notebooks/run_on_colab.ipynb) on Colab (CPU is enough).
+Reproduce everything: `make all` (about 10 min tuning + 15 min evaluation on 8 cores), or run [`notebooks/run_on_colab.ipynb`](notebooks/run_on_colab.ipynb) on Colab (CPU is enough).
 
 ## Layout
 
